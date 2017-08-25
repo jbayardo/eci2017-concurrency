@@ -1,0 +1,8 @@
+X86 1FLB
+"MFencedWR Fre MFencedWR Fre"
+{x=0; y=0;}
+ P0          | P1          ;
+ MOV [x],$1  | MOV [y],$1  ;
+ MFENCE      | MOV EBX,[x] ;
+ MOV EAX,[y] |             ;
+exists (0:EAX=0 /\ 1:EBX=0)

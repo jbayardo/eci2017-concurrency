@@ -1,0 +1,27 @@
+"First attempt at PSO"
+
+include "cos.cat"
+
+(* Uniproc check specialized for TSO *)
+irreflexive po-loc & (R*W); rfi as uniprocRW
+irreflexive po-loc & (W*R); fri as uniprocWR
+
+(* Communication relations that order events*)
+let com-tso = rfe | co | fr
+
+(* Program order that orders events *)
+let mfence = po & (_ * MFENCE) ; po
+(* The key difference here with TSO is that we remove ordering between writes 
+to different locations. This is the same as preserving writes to the same
+memory location. Since loc is the relation of events to the same memory
+location, and W is the set of writes, W*W is the set of all possible writes,
+loc&(W*W) is the relation of all writes to the same memory location. *)
+let ws = loc&(W*W)
+let po-tso = po & (ws | R*M) | mfence
+
+(* TSP global-happens-before *)
+let ghb = po-tso | com-tso
+show mfence,ghb
+acyclic ghb as tso
+
+

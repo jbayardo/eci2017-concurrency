@@ -30,3 +30,7 @@
 *.exe
 *.out
 *.app
+java/ECI2017_Concurrency_A/out/
+java/ECI2017_Concurrency_B/out/
+java/ECI2017_Concurrency_B/.idea/
+java/ECI2017_Concurrency_A/.idea/

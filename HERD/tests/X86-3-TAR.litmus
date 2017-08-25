@@ -1,0 +1,7 @@
+X86 TAR
+"MFencedWR Fre MFencedWR Fre"
+{ x=0; y=0; }
+ P0          | P1          ;
+ MOV EAX,[y] | MOV EBX,[x] ;
+ MOV [x],EAX | MOV [y],EBX  ;
+exists (0:EAX=1 /\ 1:EBX=1)

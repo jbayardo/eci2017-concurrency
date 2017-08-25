@@ -1,0 +1,19 @@
+int main() {
+    atomic_int x = 0;
+    atomic_int y = 0;
+    atomic_int o1 = 0;
+    atomic_int o2 = 0;
+    {{{
+        { x.store(1, memory_order_release);
+          atomic_thread_fence(memory_order_seq_cst);
+          o1.store(y.load(memory_order_consume), memory_order_relaxed); }
+    ||| { y.store(1, memory_order_release);
+          atomic_thread_fence(memory_order_seq_cst);
+          o2.store(x.load(memory_order_consume), memory_order_relaxed); }
+    }}}
+
+    o1.readsvalue(0);
+    o2.readsvalue(0);
+
+    return 0;
+}
